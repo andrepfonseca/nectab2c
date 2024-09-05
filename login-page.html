@@ -313,8 +313,7 @@
       </div>
     </div>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const emailWarningIconHTML = `
+      const emailWarningIconHTML = `
           <img
             id="emailWarningIcon"
             src="https://andrepfonseca.github.io/nectab2c/warningIcon.svg"
@@ -329,7 +328,7 @@
           />
         `;
 
-        const passwordWarningIconHTML = `
+      const passwordWarningIconHTML = `
           <img
             id="passwordWarningIcon"
             src="https://andrepfonseca.github.io/nectab2c/warningIcon.svg"
@@ -344,14 +343,13 @@
           />
         `;
 
-        const entryItemToAddIcon = document.querySelectorAll(".entry-item");
+      const entryItemToAddIcon = document.querySelectorAll(".entry-item");
 
-        entryItemToAddIcon.forEach((entryItem, index) => {
-          if (index === 0)
-            entryItem.insertAdjacentHTML("beforeend", emailWarningIconHTML);
-          if (index === 1)
-            entryItem.insertAdjacentHTML("beforeend", passwordWarningIconHTML);
-        });
+      entryItemToAddIcon.forEach((entryItem, index) => {
+        if (index === 0)
+          entryItem.insertAdjacentHTML("beforeend", emailWarningIconHTML);
+        if (index === 1)
+          entryItem.insertAdjacentHTML("beforeend", passwordWarningIconHTML);
       });
 
       const itemLevelErrorDiv = document.querySelectorAll(".error.itemLevel");
