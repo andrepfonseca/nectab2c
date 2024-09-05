@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <title>Necta | Entrar</title>
+
+    <link
+      rel="icon"
+      href="https://mrz-rethink-public.s3.amazonaws.com/favicon.ico"
+      type="image/x-icon"
+    />
+
+    <style>
+      /* Estilos CSS */
+
+      @font-face {
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      body {
+        font-family: "Neue Plak", sans-serif; /* Utiliza a fonte 'Neue Plak' e fallback para fontes sans-serif */
+      }
+
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+      }
+
+      h3 {
+        margin: 0;
+        font-weight: 300;
+        font-size: 20px;
+        line-height: 28px;
+        color: #1f384c;
+      }
+
+      .wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+      }
+
+      .image {
+        aspect-ratio: 1;
+        height: 100%;
+        width: 46%;
+        border-radius: 0px 0px 288px 0px;
+      }
+
+      .formsWrapper {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 40%;
+        justify-content: center;
+        align-items: center;
+        background-image: url("https://mrz-rethink-public.s3.amazonaws.com/Necta+SVG+1.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: repeat-y;
+        overflow-y: auto;
+      }
+
+      form {
+        width: 100%;
+        height: 100%;
+      }
+
+      #createAccount,
+      .create,
+      .divider,
+      .heading,
+      .intro,
+      .password-label,
+      .working,
+      .entry-item > label {
+        display: none;
+      }
+
+      .entry-item > input {
+        width: 100% !important;
+        height: 53px !important;
+        background-color: #eff6f7 !important;
+        border-radius: 4px 4px 0px 0px !important;
+        box-shadow: none !important;
+        margin-bottom: 0px !important;
+        padding-left: 12px !important;
+        padding-top: 12px !important;
+        box-sizing: border-box !important;
+        color: #1b1f20 !important;
+        border-color: #006875 !important;
+        font-size: 16px !important;
+        font-style: normal !important;
+        font-weight: 300;
+        line-height: 24px !important;
+        letter-spacing: 0.5px;
+      }
+
+      .entry-item > input:focus:invalid {
+        box-shadow: none !important;
+      }
+
+      .entry-item > input:not(:focus) {
+        box-shadow: none !important;
+      }
+
+      .entry-item > input:focus {
+        box-shadow: none !important;
+        border-color: #006875 !important;
+        color: #464b4c;
+      }
+
+      #next {
+        background-color: #aee02d !important;
+        color: #00333c !important;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        border-radius: 100px;
+        font-size: 14px;
+        letter-spacing: 0.1px;
+        font-weight: 600;
+        line-height: 20px;
+        padding: 10px 24px;
+      }
+
+      #next:disabled {
+        background-color: #eff6f7 !important;
+        color: #949899 !important;
+      }
+
+      .forms {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+        align-items: start;
+        background-color: #ffffff;
+        width: 66%;
+        height: 84%;
+        border-radius: 12px;
+        padding: 64px 24px;
+      }
+
+      #logo {
+        height: 50px;
+        flex-shrink: 0;
+        margin-bottom: 30px;
+      }
+
+      .error-message {
+        color: #a7022a;
+        margin-top: 2px;
+        margin-left: 15px;
+        font-size: 12px;
+      }
+
+      #api {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        width: 100%;
+        height: 55%;
+      }
+
+      .entry {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .entry-item {
+        display: flex;
+        flex-direction: column-reverse;
+      }
+
+      .error > p {
+        color: #a7022a;
+        padding-left: 16px;
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+      }
+
+      .forgotWrapper {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+      }
+
+      .forgotPassword {
+        width: 100%;
+        text-align: center;
+        color: #00333c;
+      }
+
+      .loading-spinner {
+        border: 2px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 2px solid #006875;
+        width: 20px;
+        height: 20px;
+        animation: spin 2s linear infinite;
+        margin-left: 8px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @media screen and (max-height: 640px) {
+        .forms h3 {
+          margin-bottom: 28px;
+        }
+      }
+
+      @media screen and (max-width: 768px) {
+        .image {
+          display: none;
+        }
+
+        .wrapper {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 100%;
+          width: 100%;
+        }
+        .formsWrapper {
+          display: flex;
+          height: 100%;
+          width: 100%;
+          justify-content: center;
+          align-items: center;
+          background: none;
+        }
+
+        #api {
+          height: auto;
+        }
+
+        .forms {
+          display: flex;
+          width: 100%;
+          height: 100%;
+        }
+
+        .entry {
+          display: flex;
+          flex-direction: column;
+          height: auto;
+          gap: 36px;
+        }
+
+        .buttons {
+          margin-top: 24px;
+        }
+
+        .forgotWrapper {
+          margin-top: 48px;
+          padding-bottom: 64px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <img
+        id="base64Image"
+        class="image"
+        src="https://mrz-rethink-public.s3.amazonaws.com/background.webp"
+      />
+      <div class="formsWrapper">
+        <div class="forms">
+          <img
+            id="logo"
+            src="https://mrz-rethink-public.s3.amazonaws.com/logo.webp"
+            style="height: 28px"
+          />
+          <h3>Acesse sua conta</h3>
+          <div id="api" data-name="Unified">
+            <div class="heading">
+              <h1 role="heading">Entrar</h1>
+            </div>
+            <form
+              id="localAccountForm"
+              action="JavaScript:void(0);"
+              class="localAccount"
+              aria-label="Entrar com endereço de email"
+            >
+              <div class="intro">
+                <h2 aria-level="1">Entrar com endereço de email</h2>
+              </div>
+              <div
+                class="error pageLevel"
+                aria-hidden="true"
+                role="alert"
+                style="display: none"
+              >
+                <p></p>
+              </div>
+              <div class="entry">
+                <div class="entry-item" style="position: relative">
+                  <label for="email"> Endereço de Email </label>
+                  <div
+                    class="error itemLevel"
+                    aria-hidden="true"
+                    role="alert"
+                    style="display: none"
+                  >
+                    <p></p>
+                  </div>
+                  <h3
+                    style="
+                      position: absolute;
+                      top: 3px;
+                      left: 12px;
+                      font-size: 10px;
+                    "
+                  ></h3>
+                  <input
+                    type="email"
+                    id="email"
+                    name="Endereço de Email"
+                    title="Insira um Endereço de Email válido"
+                    pattern="^[a-zA-Z0-9!#$%&amp;'+^_`{}~-]+(?:\.[a-zA-Z0-9!#$%&amp;'+^_`{}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"
+                    autofocus=""
+                    aria-label="Endereço de Email"
+                  />
+                </div>
+                <div class="entry-item" style="position: relative">
+                  <div class="password-label">
+                    <label for="password">Senha</label>
+                    <a
+                      id="forgotPassword"
+                      href="/nectagasb2c.onmicrosoft.com/B2C_1_signupsignin/api/CombinedSigninAndSignup/unified?claimsexchange=ForgotPassword&amp;csrf_token=amc5ZGxYSG1tNUNGd3VYaE9kWUsrTnVvS2Vyb3gvVGo0bTRpK2U3d01OVnRPSDZXSWFhcHlmR2tXbCtxVjhmODRXaDFhcE9sdjBmbC82UTVXVEo2MEE9PTsyMDI0LTA5LTAyVDE5OjQ0OjAzLjIxMzM0MzFaO3ZxcmYxUjVSSnc0YnBZTWd3VC9IWHc9PTt7Ik9yY2hlc3RyYXRpb25TdGVwIjoxfQ==&amp;tx=StateProperties=eyJUSUQiOiJiOWRjZmViNi0zMTIwLTQ4MGMtYjIzMi00MmVjOGQyODljODAifQ&amp;p=B2C_1_signupsignin"
+                      >Esqueceu sua senha?</a
+                    >
+                  </div>
+                  <div
+                    class="error itemLevel"
+                    aria-hidden="true"
+                    style="display: none"
+                  >
+                    <p role="alert"></p>
+                  </div>
+                  <h3
+                    style="
+                      position: absolute;
+                      top: 3px;
+                      left: 12px;
+                      font-size: 10px;
+                    "
+                  ></h3>
+                  <input
+                    type="password"
+                    id="password"
+                    name="Senha"
+                    aria-label="Senha"
+                    autocomplete="current-password"
+                    aria-required="true"
+                  />
+                </div>
+                <div class="working"></div>
+
+                <div class="buttons">
+                  <button id="next" type="submit" form="localAccountForm">
+                    Entrar
+                  </button>
+                </div>
+              </div>
+              <div class="divider">
+                <h2>OU</h2>
+              </div>
+              <div class="create">
+                <p>
+                  Não possui uma conta?<a
+                    id="createAccount"
+                    href="/nectagasb2c.onmicrosoft.com/B2C_1_signupsignin/api/CombinedSigninAndSignup/unified?local=signup&amp;csrf_token=amc5ZGxYSG1tNUNGd3VYaE9kWUsrTnVvS2Vyb3gvVGo0bTRpK2U3d01OVnRPSDZXSWFhcHlmR2tXbCtxVjhmODRXaDFhcE9sdjBmbC82UTVXVEo2MEE9PTsyMDI0LTA5LTAyVDE5OjQ0OjAzLjIxMzM0MzFaO3ZxcmYxUjVSSnc0YnBZTWd3VC9IWHc9PTt7Ik9yY2hlc3RyYXRpb25TdGVwIjoxfQ==&amp;tx=StateProperties=eyJUSUQiOiJiOWRjZmViNi0zMTIwLTQ4MGMtYjIzMi00MmVjOGQyODljODAifQ&amp;p=B2C_1_signupsignin"
+                    >Inscrever-se agora</a
+                  >
+                </p>
+              </div>
+            </form>
+          </div>
+          <div class="forgotWrapper">
+            <a href="#" id="customForgotPassword" class="forgotPassword"
+              >Esqueci minha senha</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Evita o flick ao entrar
+      const workingElement = document.getElementsByClassName("working")[0];
+      workingElement.style.position = "absolute";
+
+      // Mover mensagens de erro para os campos corretos
+      const pageLevelErrorDiv = document.querySelector(".error.pageLevel");
+      function moveErrorMessages() {
+        const pageLevelErrors = pageLevelErrorDiv.querySelectorAll("p");
+        pageLevelErrors.forEach((errorParagraph) => {
+          const errorText = errorParagraph.textContent.toLowerCase().trim();
+          if (errorText.includes("e-mail") || errorText.includes("email")) {
+            const emailEntryItem = document
+              .querySelector('.entry-item input[type="email"]')
+              .closest(".entry-item");
+            const emailErrorDiv =
+              emailEntryItem.querySelector(".error.itemLevel");
+            emailErrorDiv.querySelector("p").textContent =
+              errorParagraph.textContent;
+            emailErrorDiv.style.display = "block";
+          } else if (
+            errorText.includes("senha") ||
+            errorText.includes("password")
+          ) {
+            const passwordEntryItem = document
+              .querySelector('.entry-item input[type="password"]')
+              .closest(".entry-item");
+            const passwordErrorDiv =
+              passwordEntryItem.querySelector(".error.itemLevel");
+            passwordErrorDiv.querySelector("p").textContent =
+              errorParagraph.textContent;
+            passwordErrorDiv.style.display = "block";
+          }
+          errorParagraph.textContent = "";
+        });
+      }
+      const errorObserver = new MutationObserver(moveErrorMessages);
+      errorObserver.observe(pageLevelErrorDiv, {
+        childList: true,
+        subtree: true,
+      });
+      moveErrorMessages();
+
+      // Loading do botão de entrar
+      const workingDiv = document.getElementsByClassName("working")[0];
+      function handleLoadingButtonState() {
+        let errorMessages = [];
+        event.preventDefault();
+        const sendFormButton = document.getElementById("next");
+
+        const errors = document.querySelectorAll(".error.itemLevel");
+        errors.forEach((error) => {
+          if (
+            error.children[0].textContent !== "" &&
+            error.style.display !== "none"
+          ) {
+            errorMessages.push(error.children[0].textContent);
+          }
+        });
+
+        if (workingElement.style.display === "block") {
+          // Desativa o botão e exibe o spinner de loading
+          sendFormButton.disabled = true;
+          sendFormButton.innerHTML = "<div class='loading-spinner'></div>";
+        }
+        console.log("TESTE", errorMessages);
+        if (
+          workingElement.style.display === "none" &&
+          errorMessages.length > 0
+        ) {
+          // Ativa o botão e remove o spinner de loading
+          sendFormButton.disabled = false;
+          let errorMessages = [];
+          sendFormButton.textContent = "Entrar";
+        }
+      }
+
+      const submitObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (
+            mutation.type === "attributes" &&
+            mutation.attributeName === "style"
+          ) {
+            handleLoadingButtonState();
+          }
+        });
+      });
+      submitObserver.observe(workingDiv, {
+        attributes: true,
+        attributeFilter: ["style"],
+      });
+
+      //EMAIL INPUT
+      // Remove o atributo placeholder do input de password
+      var inputElement = document.getElementById("email");
+      inputElement.removeAttribute("placeholder");
+
+      var entryItem = document.querySelector(".entry-item");
+      entryItem.style.position = "relative";
+
+      var emailLabel = document.createElement("h3");
+      emailLabel.textContent = "E-mail";
+
+      emailLabel.style.position = "absolute";
+      emailLabel.style.top = "3px";
+      emailLabel.style.left = "12px";
+      emailLabel.style.fontSize = "10px";
+      entryItem.insertBefore(emailLabel, document.getElementById("email"));
+
+      //PASSWORD INPUT
+      // Remove o atributo placeholder do input de senha
+      var passwordInputElement = document.getElementById("password");
+      passwordInputElement.removeAttribute("placeholder");
+
+      // Criação e estilização da label para o campo de senha
+      var passwordEntryItem = document.querySelectorAll(".entry-item")[1];
+      passwordEntryItem.style.position = "relative";
+
+      var passwordLabel = document.createElement("h3");
+      passwordLabel.textContent = "Senha";
+      passwordLabel.style.position = "absolute";
+      passwordLabel.style.top = "3px";
+      passwordLabel.style.left = "12px";
+      passwordLabel.style.fontSize = "10px";
+      passwordEntryItem.insertBefore(
+        passwordLabel,
+        document.getElementById("password")
+      );
+
+      // Button name
+      const submitButton = document.getElementById("next");
+      submitButton.textContent = "Entrar";
+
+      ("use strict");
+      $(document).ready(function () {
+        var customForgotPassword = document.getElementById(
+          "customForgotPassword"
+        );
+        customForgotPassword.addEventListener("click", function () {
+          var forgotPassword = document.getElementById("forgotPassword");
+          if (forgotPassword) {
+            forgotPassword.click();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
