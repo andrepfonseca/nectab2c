@@ -313,11 +313,138 @@
       </div>
     </div>
     <script>
-      // Evita o flick ao entrar
+      document.addEventListener("DOMContentLoaded", function () {
+        const emailWarningIconHTML = `
+          <img
+            id="emailWarningIcon"
+            src="https://andrepfonseca.github.io/nectab2c/warningIcon.svg"
+            style="
+              position: absolute;
+              top: 18px;
+              width: 20px;
+              height: 20px;
+              right: 14px;
+              display: none;
+            "
+          />
+        `;
+
+        const passwordWarningIconHTML = `
+          <img
+            id="passwordWarningIcon"
+            src="https://andrepfonseca.github.io/nectab2c/warningIcon.svg"
+            style="
+              position: absolute;
+              top: 18px;
+              width: 20px;
+              height: 20px;
+              right: 14px;
+              display: none;
+            "
+          />
+        `;
+
+        const entryItemToAddIcon = document.querySelectorAll(".entry-item");
+
+        entryItemToAddIcon.forEach((entryItem, index) => {
+          if (index === 0)
+            entryItem.insertAdjacentHTML("beforeend", emailWarningIconHTML);
+          if (index === 1)
+            entryItem.insertAdjacentHTML("beforeend", passwordWarningIconHTML);
+        });
+      });
+
+      const itemLevelErrorDiv = document.querySelectorAll(".error.itemLevel");
+      function handleInputErrorStyle() {
+        let emailError = "";
+        let passwordError = "";
+
+        const errors = document.querySelectorAll(".error.itemLevel");
+        errors.forEach((error, index) => {
+          if (
+            index == 0 &&
+            error.children[0].textContent !== "" &&
+            error.style.display !== "none"
+          ) {
+            emailError = error.children[0].textContent;
+          }
+
+          if (
+            index == 1 &&
+            error.children[0].textContent !== "" &&
+            error.style.display !== "none"
+          ) {
+            passwordError = error.children[0].textContent;
+          }
+        });
+
+        if (emailError && errors.item(0).children[0].style.display !== "none") {
+          const emailWarningIconElement =
+            document.getElementById("emailWarningIcon");
+          emailWarningIconElement.style.display = "block";
+
+          const emailInputFieldElement = document.getElementById("email");
+          emailInputFieldElement.setAttribute(
+            "style",
+            "background-color: #FFF2F5 !important; border-bottom: 2px solid #A7022A !important;"
+          );
+        } else {
+          const emailWarningIconElement =
+            document.getElementById("emailWarningIcon");
+          emailWarningIconElement.style.display = "none";
+
+          const emailInputFieldElement = document.getElementById("email");
+          emailInputFieldElement.setAttribute(
+            "style",
+            "background-color: #eff6f7 !important; border-bottom: 1px solid #9e9e9e !important;"
+          );
+        }
+
+        if (
+          passwordError &&
+          errors.item(1).children[0].style.display !== "none"
+        ) {
+          const passwordWarningIconElement = document.getElementById(
+            "passwordWarningIcon"
+          );
+          passwordWarningIconElement.style.display = "block";
+
+          const passwordInputFieldElement = document.getElementById("password");
+          passwordInputFieldElement.setAttribute(
+            "style",
+            "background-color: #FFF2F5 !important; border-bottom: 2px solid #A7022A !important;"
+          );
+        } else {
+          const passwordWarningIconElement = document.getElementById(
+            "passwordWarningIcon"
+          );
+          passwordWarningIconElement.style.display = "none";
+
+          const passwordInputFieldElement = document.getElementById("password");
+          passwordInputFieldElement.setAttribute(
+            "style",
+            "background-color: #eff6f7 !important; border-bottom: 1px solid #9e9e9e !important;"
+          );
+        }
+      }
+
+      const warningObserver = new MutationObserver(handleInputErrorStyle);
+      warningObserver.observe(itemLevelErrorDiv.item(0), {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ["style"],
+      });
+      warningObserver.observe(itemLevelErrorDiv.item(1), {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ["style"],
+      });
+
       const workingElement = document.getElementsByClassName("working")[0];
       workingElement.style.position = "absolute";
 
-      // Mover mensagens de erro para os campos corretos
       const pageLevelErrorDiv = document.querySelector(".error.pageLevel");
       function moveErrorMessages() {
         const pageLevelErrors = pageLevelErrorDiv.querySelectorAll("p");
@@ -355,7 +482,6 @@
       });
       moveErrorMessages();
 
-      // Loading do botão de entrar
       const workingDiv = document.getElementsByClassName("working")[0];
       function handleLoadingButtonState() {
         let errorMessages = [];
@@ -373,16 +499,13 @@
         });
 
         if (workingElement.style.display === "block") {
-          // Desativa o botão e exibe o spinner de loading
           sendFormButton.disabled = true;
           sendFormButton.innerHTML = "<div class='loading-spinner'></div>";
         }
-        console.log("TESTE", errorMessages);
         if (
           workingElement.style.display === "none" &&
           errorMessages.length > 0
         ) {
-          // Ativa o botão e remove o spinner de loading
           sendFormButton.disabled = false;
           let errorMessages = [];
           sendFormButton.textContent = "Entrar";
@@ -404,8 +527,6 @@
         attributeFilter: ["style"],
       });
 
-      //EMAIL INPUT
-      // Remove o atributo placeholder do input de password
       var inputElement = document.getElementById("email");
       inputElement.removeAttribute("placeholder");
 
@@ -421,12 +542,9 @@
       emailLabel.style.fontSize = "10px";
       entryItem.insertBefore(emailLabel, document.getElementById("email"));
 
-      //PASSWORD INPUT
-      // Remove o atributo placeholder do input de senha
       var passwordInputElement = document.getElementById("password");
       passwordInputElement.removeAttribute("placeholder");
 
-      // Criação e estilização da label para o campo de senha
       var passwordEntryItem = document.querySelectorAll(".entry-item")[1];
       passwordEntryItem.style.position = "relative";
 
@@ -441,7 +559,6 @@
         document.getElementById("password")
       );
 
-      // Button name
       const submitButton = document.getElementById("next");
       submitButton.textContent = "Entrar";
 
