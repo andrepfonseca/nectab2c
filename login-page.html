@@ -352,6 +352,11 @@
           entryItem.insertAdjacentHTML("beforeend", passwordWarningIconHTML);
       });
 
+      const emailInputHTMLElement = document.getElementById("email");
+      const passwordInputHTMLElement = document.getElementById("password");
+      emailInputHTMLElement.setAttribute("name", "e-mail");
+      passwordInputHTMLElement.setAttribute("name", "senha");
+
       const itemLevelErrorDiv = document.querySelectorAll(".error.itemLevel");
       function handleInputErrorStyle() {
         let emailError = "";
